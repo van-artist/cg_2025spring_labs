@@ -1,3 +1,5 @@
 .vscode/
 build/
 static/
+report/
+report/lab1.md
