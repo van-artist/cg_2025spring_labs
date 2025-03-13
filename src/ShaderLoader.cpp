@@ -10,7 +10,6 @@ ShaderLoader::~ShaderLoader()
     deleteProgram();
 }
 
-// 读取 Shader 文件
 std::string ShaderLoader::readShaderFile(const std::string &filePath)
 {
     std::ifstream file(filePath);
@@ -24,7 +23,6 @@ std::string ShaderLoader::readShaderFile(const std::string &filePath)
     return buffer.str();
 }
 
-// 检查 Shader 编译
 void ShaderLoader::checkShaderCompilation(unsigned int shader, const std::string &type)
 {
     int success;
@@ -38,7 +36,6 @@ void ShaderLoader::checkShaderCompilation(unsigned int shader, const std::string
     }
 }
 
-// 检查 Shader 程序链接
 void ShaderLoader::checkProgramLinking(unsigned int program)
 {
     int success;
@@ -52,7 +49,6 @@ void ShaderLoader::checkProgramLinking(unsigned int program)
     }
 }
 
-// 编译 Shader
 unsigned int ShaderLoader::compileShader(unsigned int type, const std::string &source)
 {
     unsigned int shader = glCreateShader(type);
@@ -63,7 +59,6 @@ unsigned int ShaderLoader::compileShader(unsigned int type, const std::string &s
     return shader;
 }
 
-// 加载顶点着色器
 unsigned int ShaderLoader::loadVertexShader(const std::string &filePath)
 {
     std::string source = readShaderFile(filePath);
@@ -71,7 +66,6 @@ unsigned int ShaderLoader::loadVertexShader(const std::string &filePath)
     return vertexShaderID;
 }
 
-// 加载片段着色器
 unsigned int ShaderLoader::loadFragmentShader(const std::string &filePath)
 {
     std::string source = readShaderFile(filePath);
@@ -79,41 +73,33 @@ unsigned int ShaderLoader::loadFragmentShader(const std::string &filePath)
     return fragmentShaderID;
 }
 
-// **创建着色器程序**
 void ShaderLoader::createShaderProgram(const std::string &vertexPath, const std::string &fragmentPath)
 {
-    // 先删除旧的 Shader
     deleteProgram();
 
-    // 加载 & 编译 Shader
     loadVertexShader(vertexPath);
     loadFragmentShader(fragmentPath);
 
-    // 创建 Shader 程序
     programID = glCreateProgram();
     glAttachShader(programID, vertexShaderID);
     glAttachShader(programID, fragmentShaderID);
     glLinkProgram(programID);
     checkProgramLinking(programID);
 
-    // 删除着色器对象（已链接到 programID，不需要保留）
     deleteShaders();
 }
 
-// 绑定着色器
 void ShaderLoader::use()
 {
     if (programID != 0)
         glUseProgram(programID);
 }
 
-// 获取着色器程序 ID
 unsigned int ShaderLoader::getProgramID() const
 {
     return programID;
 }
 
-// 删除 Shader（仅删除单个 shader）
 void ShaderLoader::deleteShaders()
 {
     if (vertexShaderID != 0)
@@ -128,7 +114,6 @@ void ShaderLoader::deleteShaders()
     }
 }
 
-// 删除 Shader 程序
 void ShaderLoader::deleteProgram()
 {
     if (programID != 0)
