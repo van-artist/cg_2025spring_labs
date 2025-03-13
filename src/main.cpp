@@ -24,7 +24,9 @@ int main()
     }
 
     ShaderLoader shaderLoader;
-    auto shaderProgram = shaderLoader.createShaderProgram("./shaders/vertex_shader.vs", "./shaders/fragment_shader.fs");
+    shaderLoader.createShaderProgram("./shaders/vertex_shader.vs", "./shaders/fragment_shader.fs");
+    auto shaderProgram = shaderLoader.getProgramID();
+    shaderLoader.use();
     float vertices[] = {
         // 位置坐标       | 颜色             | 纹理坐标
         0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f,    // 顶点 A

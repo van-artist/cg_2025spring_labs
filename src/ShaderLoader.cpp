@@ -3,6 +3,14 @@
 #include <sstream>
 #include <glad/glad.h>
 
+ShaderLoader::ShaderLoader() : programID(0), vertexShaderID(0), fragmentShaderID(0) {}
+
+ShaderLoader::~ShaderLoader()
+{
+    deleteProgram();
+}
+
+// 读取 Shader 文件
 std::string ShaderLoader::readShaderFile(const std::string &filePath)
 {
     std::ifstream file(filePath);
@@ -13,20 +21,10 @@ std::string ShaderLoader::readShaderFile(const std::string &filePath)
     }
     std::stringstream buffer;
     buffer << file.rdbuf();
-    std::string shaderCode = buffer.str();
-
-    if (shaderCode.empty())
-    {
-        std::cerr << "ERROR: Shader file is empty: " << filePath << std::endl;
-    }
-    else
-    {
-        std::cout << "Shader loaded successfully: " << filePath << std::endl;
-    }
-
-    return shaderCode;
+    return buffer.str();
 }
 
+// 检查 Shader 编译
 void ShaderLoader::checkShaderCompilation(unsigned int shader, const std::string &type)
 {
     int success;
@@ -40,6 +38,7 @@ void ShaderLoader::checkShaderCompilation(unsigned int shader, const std::string
     }
 }
 
+// 检查 Shader 程序链接
 void ShaderLoader::checkProgramLinking(unsigned int program)
 {
     int success;
@@ -53,63 +52,88 @@ void ShaderLoader::checkProgramLinking(unsigned int program)
     }
 }
 
+// 编译 Shader
 unsigned int ShaderLoader::compileShader(unsigned int type, const std::string &source)
 {
     unsigned int shader = glCreateShader(type);
     const char *src = source.c_str();
     glShaderSource(shader, 1, &src, nullptr);
     glCompileShader(shader);
-
     checkShaderCompilation(shader, type == GL_VERTEX_SHADER ? "Vertex" : "Fragment");
     return shader;
 }
 
+// 加载顶点着色器
 unsigned int ShaderLoader::loadVertexShader(const std::string &filePath)
 {
     std::string source = readShaderFile(filePath);
-    return compileShader(GL_VERTEX_SHADER, source);
+    vertexShaderID = compileShader(GL_VERTEX_SHADER, source);
+    return vertexShaderID;
 }
 
+// 加载片段着色器
 unsigned int ShaderLoader::loadFragmentShader(const std::string &filePath)
 {
     std::string source = readShaderFile(filePath);
-    return compileShader(GL_FRAGMENT_SHADER, source);
+    fragmentShaderID = compileShader(GL_FRAGMENT_SHADER, source);
+    return fragmentShaderID;
 }
 
-unsigned int ShaderLoader::createShaderProgram(const std::string &vertexPath, const std::string &fragmentPath)
+// **创建着色器程序**
+void ShaderLoader::createShaderProgram(const std::string &vertexPath, const std::string &fragmentPath)
 {
-    unsigned int vertexShader = loadVertexShader(vertexPath);
-    unsigned int fragmentShader = loadFragmentShader(fragmentPath);
+    // 先删除旧的 Shader
+    deleteProgram();
 
-    if (vertexShader == 0 || fragmentShader == 0)
+    // 加载 & 编译 Shader
+    loadVertexShader(vertexPath);
+    loadFragmentShader(fragmentPath);
+
+    // 创建 Shader 程序
+    programID = glCreateProgram();
+    glAttachShader(programID, vertexShaderID);
+    glAttachShader(programID, fragmentShaderID);
+    glLinkProgram(programID);
+    checkProgramLinking(programID);
+
+    // 删除着色器对象（已链接到 programID，不需要保留）
+    deleteShaders();
+}
+
+// 绑定着色器
+void ShaderLoader::use()
+{
+    if (programID != 0)
+        glUseProgram(programID);
+}
+
+// 获取着色器程序 ID
+unsigned int ShaderLoader::getProgramID() const
+{
+    return programID;
+}
+
+// 删除 Shader（仅删除单个 shader）
+void ShaderLoader::deleteShaders()
+{
+    if (vertexShaderID != 0)
     {
-        std::cerr << "Shader compilation failed!" << std::endl;
-        return 0;
+        glDeleteShader(vertexShaderID);
+        vertexShaderID = 0;
     }
-
-    unsigned int shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    checkProgramLinking(shaderProgram);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-
-    return shaderProgram;
+    if (fragmentShaderID != 0)
+    {
+        glDeleteShader(fragmentShaderID);
+        fragmentShaderID = 0;
+    }
 }
 
-void ShaderLoader::deleteShader(unsigned int shader)
+// 删除 Shader 程序
+void ShaderLoader::deleteProgram()
 {
-    glDeleteShader(shader);
+    if (programID != 0)
+    {
+        glDeleteProgram(programID);
+        programID = 0;
+    }
 }
-
-void ShaderLoader::deleteProgram(unsigned int program)
-{
-    glDeleteProgram(program);
-}
-
-ShaderLoader::ShaderLoader() {}
-
-ShaderLoader::~ShaderLoader() {}
