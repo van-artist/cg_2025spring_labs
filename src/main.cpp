@@ -8,6 +8,7 @@
 #include <iostream>
 #include "ShaderLoader.h"
 #include "utils.h"
+#include "Camera.h"
 
 float vertices[] = {
     // 位置坐标       | 颜色             | 纹理坐标
@@ -36,35 +37,12 @@ unsigned int indices[] = {
 
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+float lastX = SCR_WIDTH / 2.0f; // 鼠标初始位置
+float lastY = SCR_HEIGHT / 2.0f;
+bool firstMouse = true;
 
-float cameraSpeed = 0.05f;
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+Camera camera;
 
-float yaw = -90.0f;              // 水平旋转角度（默认向右）
-float pitch = 0.0f;              // 垂直旋转角度（默认水平）
-float lastX = SCR_WIDTH / 2.0f;  // 鼠标上次位置
-float lastY = SCR_HEIGHT / 2.0f; // 鼠标上次位置
-float mouseSensitivity = 0.1f;   // 鼠标灵敏度
-bool firstMouse = true;          // 用来判断是否是第一次捕获鼠标位置
-double *cur_xpos, *cur_ypos;
-float fov = 45.0f;
-
-void processInput(GLFWwindow *window)
-{
-    extern glm::vec3 cameraPos;
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        cameraPos += cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        cameraPos -= cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-}
 void mouse_callback(GLFWwindow *window, double xpos, double ypos)
 {
     if (firstMouse)
@@ -73,37 +51,23 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos)
         lastY = ypos;
         firstMouse = false;
     }
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos;
+
+    float xOffset = xpos - lastX;
+    float yOffset = lastY - ypos; // y轴反向
     lastX = xpos;
     lastY = ypos;
 
-    float sensitivity = 0.05f;
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
-
-    yaw += xoffset;
-    pitch += yoffset;
-    if (pitch > 89.0f)
-        pitch = 89.0f;
-    if (pitch < -89.0f)
-        pitch = -89.0f;
-
-    glm::vec3 front;
-    front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
-    front.y = sin(glm::radians(pitch));
-    front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
-    cameraFront = glm::normalize(front);
+    camera.processMouseMovement(xOffset, yOffset); // 传递偏移量给摄像机
 }
 
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
-    if (fov >= 1.0f && fov <= 45.0f)
-        fov -= yoffset;
-    if (fov <= 1.0f)
-        fov = 1.0f;
-    if (fov >= 45.0f)
-        fov = 45.0f;
+    camera.setFov(camera.getFov() - yoffset);
+
+    if (camera.getFov() < 1.0f)
+        camera.setFov(1.0f);
+    if (camera.getFov() > 45.0f)
+        camera.setFov(45.0f);
 }
 
 int main()
@@ -137,7 +101,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int width, height, nrChannels;
-    unsigned char *data = stbi_load("./static/images/image.jpeg", &width, &height, &nrChannels, 0);
+    uint16_t *data = (uint16_t *)stbi_load("./static/images/image.jpeg", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -183,25 +147,15 @@ int main()
         std::cout << "Uniform 'transform' location: " << transformLoc << std::endl;
     }
 
-    glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        cameraPos += cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        cameraPos -= cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-
     while (!glfwWindowShouldClose(window))
     {
+        processInput(window, camera);
 
-        processInput(window);
-        glfwGetCursorPos(window, cur_xpos, cur_ypos);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glm::mat4 view = camera.getViewMatrix();
+        glm::mat4 projection = camera.getProjectionMatrix((float)SCR_WIDTH / SCR_HEIGHT);
 
         float timeValue = glfwGetTime();
         float angle = timeValue * glm::radians(50.0f);
@@ -209,11 +163,6 @@ int main()
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::rotate(model, angle, glm::vec3(0.0f, 1.0f, 0.0f));
         model = glm::scale(model, glm::vec3(1.1, 1.1, 1.1));
-
-        glm::mat4 projection = glm::perspective(glm::radians(fov), 800.0f / 600.0f, 0.1f, 100.0f);
-
-        std::cout << "Camera Position: (" << cameraPos.x << ", " << cameraPos.y << ", " << cameraPos.z << ")" << std::endl;
-        glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
         glm::mat4 trans = projection * view * model;
 
@@ -234,7 +183,6 @@ int main()
 
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
-
     glDeleteProgram(shaderProgram);
 
     glfwTerminate();

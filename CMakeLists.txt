@@ -8,7 +8,6 @@ find_package(OpenGL REQUIRED)
 
 # 添加 glad、GLEW、GLFW 头文件路径
 include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(${PROJECT_SOURCE_DIR}/include/glad) 
 include_directories(/opt/homebrew/include)  
 link_directories(/opt/homebrew/lib)
 
