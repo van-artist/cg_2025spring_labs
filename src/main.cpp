@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
+#include <sstream>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include "ShaderLoader.h"
@@ -189,8 +190,42 @@ int main()
         textShader.use();
         glm::mat4 ortho = glm::ortho(0.0f, (float)SCR_WIDTH, 0.0f, (float)SCR_HEIGHT);
         glUniformMatrix4fv(glGetUniformLocation(textShader.getProgramID(), "projection"), 1, GL_FALSE, glm::value_ptr(ortho));
-        fontRender.renderText(textShader, "@BigCousin", 25.0f, 25.0f, 1.0f, glm::vec3(1.0f));
-        fontRender.renderText(textShader, "bigcousin1.cn", 540.0f, 570.0f, 0.8f, glm::vec3(1.0f));
+
+        // 获取摄像机数据
+        glm::vec3 camPos = camera.getPosition();
+        glm::vec3 camFront = camera.getFront();
+        glm::mat4 viewMatrix = camera.getViewMatrix();
+
+        // 分段生成字符串
+        std::string posText = "Camera Position: (" +
+                              std::to_string(camPos.x) + ", " +
+                              std::to_string(camPos.y) + ", " +
+                              std::to_string(camPos.z) + ")";
+
+        std::string dirText = "Camera Direction: (" +
+                              std::to_string(camFront.x) + ", " +
+                              std::to_string(camFront.y) + ", " +
+                              std::to_string(camFront.z) + ")";
+
+        // 生成视图矩阵的多行字符串
+        std::stringstream ss;
+        ss << "View Matrix:\n";
+        for (int i = 0; i < 4; i++)
+        {
+            ss << viewMatrix[i][0] << " " << viewMatrix[i][1] << " "
+               << viewMatrix[i][2] << " " << viewMatrix[i][3];
+            if (i != 3)
+                ss << "\n"; // 每行后换行，最后一行不需要
+        }
+        std::string viewText = ss.str();
+
+        // 假设屏幕高度为 SCR_HEIGHT，这里设置起始 y 坐标（注意正交矩阵通常以左下角为原点）
+        float startY = SCR_HEIGHT - 25.0f;
+
+        // 渲染每段文字（文字渲染时使用正交投影矩阵，确保文字固定在屏幕上）
+        fontRender.renderText(textShader, posText, 25.0f, startY, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+        fontRender.renderText(textShader, dirText, 25.0f, startY - 25.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+        fontRender.renderText(textShader, viewText, 25.0f, startY - 50.0f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
 
         glfwSwapBuffers(window);
         glfwPollEvents();

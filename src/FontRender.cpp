@@ -110,8 +110,21 @@ void FontRender::renderText(ShaderLoader &shader, std::string text, float x, flo
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(textVAO);
 
+    // 保存初始 x 坐标，用于换行时重置
+    float origX = x;
+
+    float lineHeight = 48 * scale;
+
     for (char c : text)
     {
+        if (c == '\n')
+        {
+
+            x = origX;
+            y -= lineHeight;
+            continue;
+        }
+
         Character ch = characters[c];
 
         float xpos = x + ch.Bearing.x * scale;
@@ -133,6 +146,7 @@ void FontRender::renderText(ShaderLoader &shader, std::string text, float x, flo
         glBindBuffer(GL_ARRAY_BUFFER, textVBO);
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
         glDrawArrays(GL_TRIANGLES, 0, 6);
+
         x += (ch.Advance >> 6) * scale;
     }
 
