@@ -77,12 +77,6 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height)
     std::cout << "窗口大小改变: " << width << "x" << height << std::endl;
 }
 
-void processInput(GLFWwindow *window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
-
 void terminateGLFW(GLFWwindow *window)
 {
     glfwDestroyWindow(window);
