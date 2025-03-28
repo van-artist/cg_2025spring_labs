@@ -6,9 +6,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 #include "ShaderLoader.h"
 #include "utils.h"
 #include "Camera.h"
+#include "FontRender.h"
 
 float vertices[] = {
     // 位置坐标       | 颜色             | 纹理坐标
@@ -73,6 +76,7 @@ void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 int main()
 {
     auto window = initWindow(SCR_WIDTH, SCR_HEIGHT, "BigCousin CG Lab");
+    FontRender fontRender("./fonts/Unicode.ttf");
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
@@ -80,6 +84,8 @@ int main()
     glDisable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cerr << "Failed to initialize GLAD" << std::endl;
@@ -88,9 +94,12 @@ int main()
         return -1;
     }
 
-    ShaderLoader shaderLoader;
-    shaderLoader.createShaderProgram("./shaders/vertex_shader.vs", "./shaders/fragment_shader.fs");
-    auto shaderProgram = shaderLoader.getProgramID();
+    ShaderLoader modelShader;
+    modelShader.createShaderProgram("./shaders/model_vertex_shader.vs", "./shaders/model_fragment_shader.fs");
+    auto shaderProgram = modelShader.getProgramID();
+    ShaderLoader textShader;
+    textShader.createShaderProgram("./shaders/text_vertex_shader.vs", "./shaders/text_fragment_shader.fs");
+    auto textProgram = textShader.getProgramID();
 
     unsigned int texture;
     glGenTextures(1, &texture);
@@ -166,7 +175,7 @@ int main()
 
         glm::mat4 trans = projection * view * model;
 
-        shaderLoader.use();
+        modelShader.use();
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
         glActiveTexture(GL_TEXTURE0);
@@ -176,6 +185,12 @@ int main()
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 12);
         glBindVertexArray(0);
+
+        textShader.use();
+        glm::mat4 ortho = glm::ortho(0.0f, (float)SCR_WIDTH, 0.0f, (float)SCR_HEIGHT);
+        glUniformMatrix4fv(glGetUniformLocation(textShader.getProgramID(), "projection"), 1, GL_FALSE, glm::value_ptr(ortho));
+        fontRender.renderText(textShader, "@BigCousin", 25.0f, 25.0f, 1.0f, glm::vec3(1.0f));
+        fontRender.renderText(textShader, "bigcousin1.cn", 540.0f, 570.0f, 0.8f, glm::vec3(1.0f));
 
         glfwSwapBuffers(window);
         glfwPollEvents();
