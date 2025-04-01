@@ -550,6 +550,10 @@ float vertices[6][4] = {
 这与我们以前写好的模型渲染着色器其实不一样，所以我们需要单独写一套文字渲染的着色器。
 然后通过`ShaderLoader`类来加载这个着色器。
 
+#### 文本顶点着色器
+
+这个着色器的作用是将屏幕坐标转换为标准化设备坐标，并将纹理坐标传递给片段着色器。
+
 ```glsl
 #version 330 core
 layout (location = 0) in vec4 vertex; // vertex.xy 是屏幕位置（像素），vertex.zw 是纹理坐标
@@ -563,6 +567,10 @@ void main()
     TexCoords = vertex.zw;
 }
 ```
+
+#### 文本片段着色器
+
+这个着色器的作用是根据纹理坐标从纹理中采样，并将采样到的颜色值与传入的文字颜色进行混合。
 
 ```glsl
 #version 330 core
