@@ -20,11 +20,15 @@ include_directories(${FREETYPE_INCLUDE_DIRS})
 include_directories(${ASSIMP_INCLUDE_DIR})
 link_directories(/opt/homebrew/lib)
 
-file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/glad.c)
+# 只编译 model_loading.cpp 文件
+set(SOURCES ${PROJECT_SOURCE_DIR}/src/main.cpp ${PROJECT_SOURCE_DIR}/src/glad.c)
+
 add_definitions(-DGL_SILENCE_DEPRECATION)
 
 # 生成可执行文件
 add_executable(OpenGL_Project ${SOURCES})
+
+# 添加着色器和其他文件的拷贝命令
 add_custom_command(TARGET OpenGL_Project POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     ${PROJECT_SOURCE_DIR}/shaders $<TARGET_FILE_DIR:OpenGL_Project>/shaders
