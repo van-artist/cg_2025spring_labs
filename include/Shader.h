@@ -3,8 +3,9 @@
 
 #include <string>
 #include <iostream>
+#include <glm/glm.hpp>
 
-class ShaderLoader
+class Shader
 {
 private:
     unsigned int programID;
@@ -19,14 +20,21 @@ private:
     unsigned int loadFragmentShader(const std::string &filePath);
 
 public:
-    ShaderLoader();
-    ~ShaderLoader();
+    Shader();
+    ~Shader();
 
     void createShaderProgram(const std::string &vertexPath, const std::string &fragmentPath);
     void use();
     void deleteShaders();
     void deleteProgram();
     unsigned int getProgramID() const;
+
+    void setInt(const std::string &name, int value);
+    void setUniform1i(const std::string &name, int value);
+    void setUniform1f(const std::string &name, float value);
+    void setUniform3f(const std::string &name, const glm::vec3 &value);
+    void setUniformMatrix4fv(const std::string &name, const glm::mat4 &matrix);
+    void setUniform3fv(const std::string &name, const float *values);
 };
 
 #endif

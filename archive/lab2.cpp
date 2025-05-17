@@ -1,12 +1,12 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
+#include "stb_image.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
-#include "ShaderLoader.h"
+#include "Shader.h"
 #include "utils.h"
 
 const unsigned int SCR_WIDTH = 800;
@@ -27,7 +27,7 @@ int main()
         return -1;
     }
 
-    ShaderLoader shaderLoader;
+    Shader shaderLoader;
     shaderLoader.createShaderProgram("./shaders/vertex_shader.vs", "./shaders/fragment_shader.fs");
     auto shaderProgram = shaderLoader.getProgramID();
     float vertices[] = {

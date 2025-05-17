@@ -103,7 +103,7 @@ GLuint FontRender::getCharacterTexture(GLchar c)
     }
 }
 
-void FontRender::renderText(ShaderLoader &shader, std::string text, float x, float y, float scale, glm::vec3 color)
+void FontRender::renderText(Shader &shader, std::string text, float x, float y, float scale, glm::vec3 color)
 {
     shader.use();
     glUniform3f(glGetUniformLocation(shader.getProgramID(), "textColor"), color.x, color.y, color.z);

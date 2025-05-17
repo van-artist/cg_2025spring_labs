@@ -1,16 +1,17 @@
-#include "ShaderLoader.h"
+#include "Shader.h"
 #include <fstream>
 #include <sstream>
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
-ShaderLoader::ShaderLoader() : programID(0), vertexShaderID(0), fragmentShaderID(0) {}
+Shader::Shader() : programID(0), vertexShaderID(0), fragmentShaderID(0) {}
 
-ShaderLoader::~ShaderLoader()
+Shader::~Shader()
 {
     deleteProgram();
 }
 
-std::string ShaderLoader::readShaderFile(const std::string &filePath)
+std::string Shader::readShaderFile(const std::string &filePath)
 {
     std::ifstream file(filePath);
     if (!file.is_open())
@@ -23,7 +24,7 @@ std::string ShaderLoader::readShaderFile(const std::string &filePath)
     return buffer.str();
 }
 
-void ShaderLoader::checkShaderCompilation(unsigned int shader, const std::string &type)
+void Shader::checkShaderCompilation(unsigned int shader, const std::string &type)
 {
     int success;
     char infoLog[512];
@@ -36,7 +37,7 @@ void ShaderLoader::checkShaderCompilation(unsigned int shader, const std::string
     }
 }
 
-void ShaderLoader::checkProgramLinking(unsigned int program)
+void Shader::checkProgramLinking(unsigned int program)
 {
     int success;
     char infoLog[512];
@@ -49,7 +50,7 @@ void ShaderLoader::checkProgramLinking(unsigned int program)
     }
 }
 
-unsigned int ShaderLoader::compileShader(unsigned int type, const std::string &source)
+unsigned int Shader::compileShader(unsigned int type, const std::string &source)
 {
     unsigned int shader = glCreateShader(type);
     const char *src = source.c_str();
@@ -59,21 +60,21 @@ unsigned int ShaderLoader::compileShader(unsigned int type, const std::string &s
     return shader;
 }
 
-unsigned int ShaderLoader::loadVertexShader(const std::string &filePath)
+unsigned int Shader::loadVertexShader(const std::string &filePath)
 {
     std::string source = readShaderFile(filePath);
     vertexShaderID = compileShader(GL_VERTEX_SHADER, source);
     return vertexShaderID;
 }
 
-unsigned int ShaderLoader::loadFragmentShader(const std::string &filePath)
+unsigned int Shader::loadFragmentShader(const std::string &filePath)
 {
     std::string source = readShaderFile(filePath);
     fragmentShaderID = compileShader(GL_FRAGMENT_SHADER, source);
     return fragmentShaderID;
 }
 
-void ShaderLoader::createShaderProgram(const std::string &vertexPath, const std::string &fragmentPath)
+void Shader::createShaderProgram(const std::string &vertexPath, const std::string &fragmentPath)
 {
     deleteProgram();
 
@@ -89,18 +90,18 @@ void ShaderLoader::createShaderProgram(const std::string &vertexPath, const std:
     deleteShaders();
 }
 
-void ShaderLoader::use()
+void Shader::use()
 {
     if (programID != 0)
         glUseProgram(programID);
 }
 
-unsigned int ShaderLoader::getProgramID() const
+unsigned int Shader::getProgramID() const
 {
     return programID;
 }
 
-void ShaderLoader::deleteShaders()
+void Shader::deleteShaders()
 {
     if (vertexShaderID != 0)
     {
@@ -114,11 +115,48 @@ void ShaderLoader::deleteShaders()
     }
 }
 
-void ShaderLoader::deleteProgram()
+void Shader::deleteProgram()
 {
     if (programID != 0)
     {
         glDeleteProgram(programID);
         programID = 0;
+    }
+}
+
+void Shader::setInt(const std::string &name, int value)
+{
+    glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
+}
+
+void Shader::setUniform1f(const std::string &name, float value)
+{
+    glUniform1f(glGetUniformLocation(programID, name.c_str()), value);
+}
+
+void Shader::setUniform3f(const std::string &name, const glm::vec3 &value)
+{
+    glUniform3f(glGetUniformLocation(programID, name.c_str()), value.x, value.y, value.z);
+}
+
+void Shader::setUniformMatrix4fv(const std::string &name, const glm::mat4 &matrix)
+{
+    glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
+void Shader::setUniform3fv(const std::string &name, const float *values)
+{
+    glUniform3fv(glGetUniformLocation(programID, name.c_str()), 1, values);
+}
+void Shader::setUniform1i(const std::string &name, int value)
+{
+    int location = glGetUniformLocation(programID, name.c_str());
+    if (location != -1)
+    {
+        glUniform1i(location, value);
+    }
+    else
+    {
+        std::cerr << "WARNING: Uniform " << name << " not found!" << std::endl;
     }
 }

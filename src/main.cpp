@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
+#include "stb_image.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -9,7 +9,7 @@
 #include <sstream>
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#include "ShaderLoader.h"
+#include "Shader.h"
 #include "utils.h"
 #include "Camera.h"
 #include "FontRender.h"
@@ -95,10 +95,10 @@ int main()
         return -1;
     }
 
-    ShaderLoader modelShader;
+    Shader modelShader;
     modelShader.createShaderProgram("./shaders/model_vertex_shader.vs", "./shaders/model_fragment_shader.fs");
     auto shaderProgram = modelShader.getProgramID();
-    ShaderLoader textShader;
+    Shader textShader;
     textShader.createShaderProgram("./shaders/text_vertex_shader.vs", "./shaders/text_fragment_shader.fs");
     auto textProgram = textShader.getProgramID();
 
