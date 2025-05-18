@@ -98,9 +98,3 @@ void processInput(GLFWwindow *window, Camera &camera, float deltaTime)
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboardInput(RIGHT, deltaTime);
 }
-
-void terminateGLFW(GLFWwindow *window)
-{
-    glfwDestroyWindow(window);
-    glfwTerminate();
-}

@@ -20,8 +20,8 @@ include_directories(${FREETYPE_INCLUDE_DIRS})
 include_directories(${ASSIMP_INCLUDE_DIR})
 link_directories(/opt/homebrew/lib)
 
-# 只编译 model_loading.cpp 文件
-set(SOURCES ${PROJECT_SOURCE_DIR}/src/main.cpp ${PROJECT_SOURCE_DIR}/src/glad.c)
+
+file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp" "${PROJECT_SOURCE_DIR}/src/*.c")
 
 add_definitions(-DGL_SILENCE_DEPRECATION)
 

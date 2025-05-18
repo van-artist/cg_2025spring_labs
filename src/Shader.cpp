@@ -5,7 +5,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 Shader::Shader() : programID(0), vertexShaderID(0), fragmentShaderID(0), geometryShaderID(0) {}
-Shader::Shader(const std::string &vertexPath, const std::string &fragmentPath, const std::string &geometryPath = "")
+Shader::Shader(const std::string &vertexPath, const std::string &fragmentPath, const std::string &geometryPath)
 {
     createShaderProgram(vertexPath, fragmentPath, geometryPath);
 }
