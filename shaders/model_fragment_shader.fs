@@ -1,36 +1,68 @@
 #version 330 core
 
-out vec4 FragColor;   // 输出颜色
+out vec4 FragColor;
 
-in vec3 FragPos;      // 片段位置
-in vec3 Normal;       // 片段法线
-in vec2 TexCoords;    // 片段纹理坐标
+in vec3 FragPos;
+in vec3 Normal;
+in vec2 TexCoords;
 
-uniform vec3 lightPos;    // 光源位置
-uniform vec3 viewPos;     // 观察者位置
-uniform sampler2D texture1; // 纹理采样器
+uniform sampler2D texture1;
+uniform vec3 viewPos;
+uniform int materialMode;  // 0: only diffuse, 1: only specular, 2: both
+
+#define NR_POINT_LIGHTS 4
+
+struct PointLight {
+    vec3 position;
+
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+
+    float constant;
+    float linear;
+    float quadratic;
+};
+
+uniform PointLight pointLights[NR_POINT_LIGHTS];
 
 void main()
 {
-    // 环境光
-    float ambientStrength = 0.1;
-    vec3 ambient = ambientStrength * vec3(1.0, 1.0, 1.0);
+    vec3 norm = normalize(Normal);
+    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 texColor = texture(texture1, TexCoords).rgb;
 
-    // 漫反射
-    vec3 norm = normalize(Normal);  // 法线向量
-    vec3 lightDir = normalize(lightPos - FragPos);  // 光源方向
-    float diff = max(dot(norm, lightDir), 0.0);  // 漫反射分量
-    vec3 diffuse = diff * vec3(1.0, 1.0, 1.0);  // 漫反射光
+    vec3 result = vec3(0.0);
 
-    // 镜面反射
-    float specularStrength = 0.5;
-    vec3 viewDir = normalize(viewPos - FragPos);  // 视线方向
-    vec3 reflectDir = reflect(-lightDir, norm);   // 反射光线方向
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    vec3 specular = specularStrength * spec * vec3(1.0, 1.0, 1.0);  // 镜面反射光
+    for (int i = 0; i < NR_POINT_LIGHTS; ++i)
+    {
+        // 光照方向与距离
+        vec3 lightDir = normalize(pointLights[i].position - FragPos);
+        float distance = length(pointLights[i].position - FragPos);
+        float attenuation = 1.0 / (pointLights[i].constant +
+                                   pointLights[i].linear * distance +
+                                   pointLights[i].quadratic * distance * distance);
 
-    // 计算最终颜色
-    vec3 result = (ambient + diffuse + specular) * texture(texture1, TexCoords).rgb;
+        // 环境光
+        vec3 ambient = pointLights[i].ambient;
 
-    FragColor = vec4(result, 1.0);  // 输出最终的颜色
+        // 漫反射
+        float diff = max(dot(norm, lightDir), 0.0);
+        vec3 diffuse = pointLights[i].diffuse * diff;
+
+        // 镜面反射
+        vec3 reflectDir = reflect(-lightDir, norm);
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0);
+        vec3 specular = pointLights[i].specular * spec;
+
+        // 根据 materialMode 决定是否加入 diffuse / specular
+        if (materialMode == 0)
+            result += (ambient + diffuse) * texColor * attenuation;
+        else if (materialMode == 1)
+            result += (ambient + specular) * texColor * attenuation;
+        else
+            result += (ambient + diffuse + specular) * texColor * attenuation;
+    }
+
+    FragColor = vec4(result, 1.0);
 }

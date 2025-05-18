@@ -33,12 +33,15 @@ public:
     unsigned int getProgramID() const;
 
     void setInt(const std::string &name, int value);
+    void setFloat(const std::string &name, float value) const;
     void setUniform1i(const std::string &name, int value);
     void setUniform1f(const std::string &name, float value);
     void setUniform3f(const std::string &name, const glm::vec3 &value);
     void setUniformMatrix4fv(const std::string &name, const glm::mat4 &matrix);
     void setUniform3fv(const std::string &name, const float *values);
     void setMat4(const std::string &name, const glm::mat4 &matrix) const;
+    void setVec3(const std::string &name, float x, float y, float z) const;
+    void setVec3(const std::string &name, const glm::vec3 &value) const;
 
     unsigned int getID() { return programID; }
 };
