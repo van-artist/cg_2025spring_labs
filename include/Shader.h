@@ -11,6 +11,7 @@ private:
     unsigned int programID;
     unsigned int vertexShaderID;
     unsigned int fragmentShaderID;
+    unsigned int geometryShaderID;
 
     std::string readShaderFile(const std::string &filePath);
     void checkShaderCompilation(unsigned int shader, const std::string &type);
@@ -18,12 +19,14 @@ private:
     unsigned int compileShader(unsigned int type, const std::string &source);
     unsigned int loadVertexShader(const std::string &filePath);
     unsigned int loadFragmentShader(const std::string &filePath);
+    unsigned int loadGeometryShader(const std::string &filePath);
 
 public:
     Shader();
+    Shader(const std::string &vertexPath, const std::string &fragmentPath, const std::string &geometryPath = "");
     ~Shader();
 
-    void createShaderProgram(const std::string &vertexPath, const std::string &fragmentPath);
+    void createShaderProgram(const std::string &vertexPath, const std::string &fragmentPath, const std::string &geometryPath = "");
     void use();
     void deleteShaders();
     void deleteProgram();

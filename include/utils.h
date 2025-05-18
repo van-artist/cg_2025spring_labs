@@ -8,3 +8,4 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window, Camera &camera);
 GLFWwindow *initWindow(unsigned int width, unsigned int height);
 GLFWwindow *initWindow(unsigned int width, unsigned int height, std::string windowTitle);
+void terminateGLFW(GLFWwindow *window);

@@ -1,51 +1,51 @@
-#pragma once
+#ifndef CAMERA_H
+#define CAMERA_H
 
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+
+enum Camera_Movement
+{
+    FORWARD,
+    BACKWARD,
+    LEFT,
+    RIGHT
+};
+
+const float YAW = -90.0f;
+const float PITCH = 0.0f;
+const float SPEED = 2.5f;
+const float SENSITIVITY = 0.1f;
+const float ZOOM = 45.0f;
 
 class Camera
 {
-private:
-    glm::vec3 position;
-    glm::vec3 front;
-    glm::vec3 up;
-    float yaw;
-    float pitch;
-    bool firstMouse;
-
-    float speed;
-    float sensitivity;
-    float fov;
-
 public:
-    Camera(glm::vec3 startPosition = glm::vec3(0.0f, 0.0f, 3.0f),
-           glm::vec3 startFront = glm::vec3(0.0f, 0.0f, -1.0f),
-           glm::vec3 startUp = glm::vec3(0.0f, 1.0f, 0.0f),
-           float startYaw = -90.0f, float startPitch = 0.0f, float startSpeed = 0.05f,
-           float startSensitivity = 0.1f, float startFov = 45.0f, bool firstMouse = false)
-        : position(startPosition), front(startFront), up(startUp), yaw(startYaw), pitch(startPitch),
-          speed(startSpeed), sensitivity(startSensitivity), fov(startFov), firstMouse(firstMouse) {}
+    glm::vec3 Position;
+    glm::vec3 Front;
+    glm::vec3 Up;
+    glm::vec3 Right;
+    glm::vec3 WorldUp;
 
-    float getSpeed() const { return speed; }
-    void setSpeed(float newSpeed) { speed = newSpeed; }
+    float Yaw;
+    float Pitch;
 
-    float getSensitivity() const { return sensitivity; }
-    void setSensitivity(float newSensitivity) { sensitivity = newSensitivity; }
+    float MovementSpeed;
+    float MouseSensitivity;
+    float Zoom;
 
-    float getFov() const { return fov; }
-    void setFov(float newFov) { fov = newFov; }
+    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
+    Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
-    glm::vec3 getPosition() const { return position; }
-    glm::vec3 getFront() const { return front; }
-    glm::vec3 getUp() const { return up; }
+    glm::mat4 GetViewMatrix();
+    void ProcessKeyboard(Camera_Movement direction, float deltaTime);
+    void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
+    void ProcessMouseScroll(float yoffset);
+    void ProcessKeyboardInput(Camera_Movement direction, float deltaTime);
 
-    float getYaw() const { return yaw; }
-    float getPitch() const { return pitch; }
-
-    void processMouseMovement(float xOffset, float yOffset);
-    void processKeyboardInput(int key);
-
-    glm::mat4 getViewMatrix() const;
-    glm::mat4 getProjectionMatrix(float aspectRatio) const;
+private:
+    void updateCameraVectors();
 };
+
+#endif

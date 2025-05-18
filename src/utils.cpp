@@ -1,6 +1,7 @@
-#include "utils.h"
-#include <iostream>
 #include <string>
+#include <iostream>
+#include "utils.h"
+#include "Camera.h"
 
 GLFWwindow *initWindow(unsigned int width, unsigned int height)
 {
@@ -83,16 +84,23 @@ void terminateGLFW(GLFWwindow *window)
     glfwTerminate();
 }
 
-void processInput(GLFWwindow *window, Camera &camera)
+void processInput(GLFWwindow *window, Camera &camera, float deltaTime)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.processKeyboardInput(GLFW_KEY_W);
+        camera.ProcessKeyboardInput(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.processKeyboardInput(GLFW_KEY_S);
+        camera.ProcessKeyboardInput(BACKWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.processKeyboardInput(GLFW_KEY_A);
+        camera.ProcessKeyboardInput(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.processKeyboardInput(GLFW_KEY_D);
+        camera.ProcessKeyboardInput(RIGHT, deltaTime);
+}
+
+void terminateGLFW(GLFWwindow *window)
+{
+    glfwDestroyWindow(window);
+    glfwTerminate();
 }

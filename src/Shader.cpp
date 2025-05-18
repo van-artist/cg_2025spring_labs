@@ -4,7 +4,11 @@
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 
-Shader::Shader() : programID(0), vertexShaderID(0), fragmentShaderID(0) {}
+Shader::Shader() : programID(0), vertexShaderID(0), fragmentShaderID(0), geometryShaderID(0) {}
+Shader::Shader(const std::string &vertexPath, const std::string &fragmentPath, const std::string &geometryPath = "")
+{
+    createShaderProgram(vertexPath, fragmentPath, geometryPath);
+}
 
 Shader::~Shader()
 {
@@ -56,7 +60,7 @@ unsigned int Shader::compileShader(unsigned int type, const std::string &source)
     const char *src = source.c_str();
     glShaderSource(shader, 1, &src, nullptr);
     glCompileShader(shader);
-    checkShaderCompilation(shader, type == GL_VERTEX_SHADER ? "Vertex" : "Fragment");
+    checkShaderCompilation(shader, type == GL_VERTEX_SHADER ? "Vertex" : (type == GL_FRAGMENT_SHADER ? "Fragment" : "Geometry"));
     return shader;
 }
 
@@ -74,7 +78,14 @@ unsigned int Shader::loadFragmentShader(const std::string &filePath)
     return fragmentShaderID;
 }
 
-void Shader::createShaderProgram(const std::string &vertexPath, const std::string &fragmentPath)
+unsigned int Shader::loadGeometryShader(const std::string &filePath)
+{
+    std::string source = readShaderFile(filePath);
+    geometryShaderID = compileShader(GL_GEOMETRY_SHADER, source);
+    return geometryShaderID;
+}
+
+void Shader::createShaderProgram(const std::string &vertexPath, const std::string &fragmentPath, const std::string &geometryPath)
 {
     deleteProgram();
 
@@ -84,6 +95,11 @@ void Shader::createShaderProgram(const std::string &vertexPath, const std::strin
     programID = glCreateProgram();
     glAttachShader(programID, vertexShaderID);
     glAttachShader(programID, fragmentShaderID);
+    if (!geometryPath.empty())
+    {
+        loadGeometryShader(geometryPath);
+        glAttachShader(programID, geometryShaderID);
+    }
     glLinkProgram(programID);
     checkProgramLinking(programID);
 
@@ -112,6 +128,11 @@ void Shader::deleteShaders()
     {
         glDeleteShader(fragmentShaderID);
         fragmentShaderID = 0;
+    }
+    if (geometryShaderID != 0)
+    {
+        glDeleteShader(geometryShaderID);
+        geometryShaderID = 0;
     }
 }
 
@@ -148,6 +169,7 @@ void Shader::setUniform3fv(const std::string &name, const float *values)
 {
     glUniform3fv(glGetUniformLocation(programID, name.c_str()), 1, values);
 }
+
 void Shader::setUniform1i(const std::string &name, int value)
 {
     int location = glGetUniformLocation(programID, name.c_str());
