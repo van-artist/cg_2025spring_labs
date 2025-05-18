@@ -41,6 +41,5 @@ add_custom_command(TARGET OpenGL_Project POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     ${PROJECT_SOURCE_DIR}/fonts $<TARGET_FILE_DIR:OpenGL_Project>/fonts
 )
-
 # 链接 OpenGL、GLEW、GLFW、Assimp 和 FreeType 库
 target_link_libraries(OpenGL_Project OpenGL::GL GLEW glfw ${FREETYPE_LIBRARIES} ${ASSIMP_LIBRARIES})
