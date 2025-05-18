@@ -38,6 +38,7 @@ public:
     void setUniform3f(const std::string &name, const glm::vec3 &value);
     void setUniformMatrix4fv(const std::string &name, const glm::mat4 &matrix);
     void setUniform3fv(const std::string &name, const float *values);
+    void setMat4(const std::string &name, const glm::mat4 &matrix) const;
 };
 
 #endif

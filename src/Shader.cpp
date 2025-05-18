@@ -182,3 +182,8 @@ void Shader::setUniform1i(const std::string &name, int value)
         std::cerr << "WARNING: Uniform " << name << " not found!" << std::endl;
     }
 }
+
+void Shader::setMat4(const std::string &name, const glm::mat4 &matrix) const
+{
+    glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
+}
