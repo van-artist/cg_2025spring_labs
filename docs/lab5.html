@@ -1,0 +1,391 @@
+<!DOCTYPE html><html><head>
+      <title>lab5</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////Users/apple/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.18/crossnote/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="lab5-模型加载与材质">Lab5 模型加载与材质 </h1>
+<hr>
+<p>姓名：刘尚<br>
+学号：202211010058<br>
+代码仓库：<a href="https://github.com/van-artist/cg_2025spring_labs">Github</a></p>
+<hr>
+<h2 id="环境配置">环境配置 </h2>
+<p>环境配置承接前三次实验，在原本的基础上，添加了对 Assimp 的支持<br>
+仍然使用 mac 的 homebrew 安装 Assimp</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>brew <span class="token function">install</span> assimp
+</code></pre><p>查看路径</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code><span class="token function">which</span> assimp
+</code></pre><p><img src="%E6%88%AA%E5%B1%8F2025-05-18%2019.24.48.png" alt="alt text"></p>
+<p>增加 cmake 配置</p>
+<pre data-role="codeBlock" data-info="cmake" class="language-cmake cmake"><code><span class="token keyword keyword-cmake_minimum_required">cmake_minimum_required</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.10</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-project">project</span><span class="token punctuation">(</span>OpenGL_Project<span class="token punctuation">)</span>
+
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_STANDARD</span> <span class="token number">17</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 设置 FreeType 库路径</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span>FREETYPE_INCLUDE_DIRS <span class="token string">"/opt/homebrew/opt/freetype/include/freetype2"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-set">set</span><span class="token punctuation">(</span>FREETYPE_LIBRARIES <span class="token string">"/opt/homebrew/opt/freetype/lib/libfreetype.dylib"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 查找 OpenGL</span>
+<span class="token keyword keyword-find_package">find_package</span><span class="token punctuation">(</span>OpenGL REQUIRED<span class="token punctuation">)</span>
+
+<span class="token comment"># 查找 Assimp</span>
+<span class="token keyword keyword-find_package">find_package</span><span class="token punctuation">(</span>ASSIMP REQUIRED<span class="token punctuation">)</span>
+
+<span class="token comment"># 添加头文件路径</span>
+<span class="token keyword keyword-include_directories">include_directories</span><span class="token punctuation">(</span><span class="token punctuation">${</span><span class="token variable">PROJECT_SOURCE_DIR</span><span class="token punctuation">}</span>/include<span class="token punctuation">)</span>
+<span class="token keyword keyword-include_directories">include_directories</span><span class="token punctuation">(</span>/opt/homebrew/include<span class="token punctuation">)</span>
+<span class="token keyword keyword-include_directories">include_directories</span><span class="token punctuation">(</span><span class="token punctuation">${</span>FREETYPE_INCLUDE_DIRS<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-include_directories">include_directories</span><span class="token punctuation">(</span><span class="token punctuation">${</span>ASSIMP_INCLUDE_DIR<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-link_directories">link_directories</span><span class="token punctuation">(</span>/opt/homebrew/lib<span class="token punctuation">)</span>
+
+
+<span class="token keyword keyword-file">file</span><span class="token punctuation">(</span>GLOB <span class="token property">SOURCES</span> <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">PROJECT_SOURCE_DIR</span><span class="token punctuation">}</span></span>/src/*.cpp"</span> <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">PROJECT_SOURCE_DIR</span><span class="token punctuation">}</span></span>/src/*.c"</span><span class="token punctuation">)</span>
+
+<span class="token keyword keyword-add_definitions">add_definitions</span><span class="token punctuation">(</span>-DGL_SILENCE_DEPRECATION<span class="token punctuation">)</span>
+
+<span class="token comment"># 生成可执行文件</span>
+<span class="token keyword keyword-add_executable">add_executable</span><span class="token punctuation">(</span>OpenGL_Project <span class="token punctuation">${</span><span class="token property">SOURCES</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 添加着色器和其他文件的拷贝命令</span>
+<span class="token keyword keyword-add_custom_command">add_custom_command</span><span class="token punctuation">(</span>TARGET OpenGL_Project POST_BUILD
+    COMMAND <span class="token punctuation">${</span><span class="token variable">CMAKE_COMMAND</span><span class="token punctuation">}</span> -E copy_directory
+    <span class="token punctuation">${</span><span class="token variable">PROJECT_SOURCE_DIR</span><span class="token punctuation">}</span>/shaders <span class="token punctuation">$&lt;</span>TARGET_FILE_DIR:OpenGL_Project<span class="token punctuation">&gt;</span>/shaders
+<span class="token punctuation">)</span>
+<span class="token keyword keyword-add_custom_command">add_custom_command</span><span class="token punctuation">(</span>TARGET OpenGL_Project POST_BUILD
+    COMMAND <span class="token punctuation">${</span><span class="token variable">CMAKE_COMMAND</span><span class="token punctuation">}</span> -E copy_directory
+    <span class="token punctuation">${</span><span class="token variable">PROJECT_SOURCE_DIR</span><span class="token punctuation">}</span>/static <span class="token punctuation">$&lt;</span>TARGET_FILE_DIR:OpenGL_Project<span class="token punctuation">&gt;</span>/static
+<span class="token punctuation">)</span>
+<span class="token keyword keyword-add_custom_command">add_custom_command</span><span class="token punctuation">(</span>TARGET OpenGL_Project POST_BUILD
+    COMMAND <span class="token punctuation">${</span><span class="token variable">CMAKE_COMMAND</span><span class="token punctuation">}</span> -E copy_directory
+    <span class="token punctuation">${</span><span class="token variable">PROJECT_SOURCE_DIR</span><span class="token punctuation">}</span>/fonts <span class="token punctuation">$&lt;</span>TARGET_FILE_DIR:OpenGL_Project<span class="token punctuation">&gt;</span>/fonts
+<span class="token punctuation">)</span>
+
+<span class="token comment"># 链接 OpenGL、GLEW、GLFW、Assimp 和 FreeType 库</span>
+<span class="token keyword keyword-target_link_libraries">target_link_libraries</span><span class="token punctuation">(</span>OpenGL_Project <span class="token inserted class-name">OpenGL::GL</span> GLEW glfw <span class="token punctuation">${</span>FREETYPE_LIBRARIES<span class="token punctuation">}</span> <span class="token punctuation">${</span>ASSIMP_LIBRARIES<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><p>现在可以使用 Assimp 了</p>
+<h2 id="实验任务">实验任务 </h2>
+<ul>
+<li>任务 1：在“model_loading.cpp”中修改相机视角或模型位置，使得在初始视图中可以观察到完整<br>
+模型；</li>
+<li>任务 2：基于任务 1，修改片段着色器代码，展示仅有漫反射材质、仅有镜面材质、二者均<br>
+有的三种不同渲染效果；</li>
+<li>任务 3：结合“light_casters_point.cpp”，基于任务 2 增加点光源，并修改光源配置，展示仅<br>
+有漫反射材质、仅有镜面材质、二者均有的三种不同渲染效果。</li>
+</ul>
+<h2 id="任务实现">任务实现 </h2>
+<p>接下来先根据 learnopengl 的教程，封装实现各个类，然后在 main 中模仿<code>model_loading.cpp</code>和<code>light_casters_point.cpp</code>的结构，完成相应的功能。<br>
+如果实验的要求是递进的，总的实验效果会在最后展示。</p>
+<h3 id="camera-类完善"><code>Camera</code> 类完善 </h3>
+<p>在原本的基础上，把事件响应的逻辑从外部封装到<code>Camera</code> 类中</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-void">void</span> <span class="token function">ProcessKeyboard</span><span class="token punctuation">(</span>Camera_Movement direction<span class="token punctuation">,</span> <span class="token keyword keyword-float">float</span> deltaTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-void">void</span> <span class="token function">ProcessMouseMovement</span><span class="token punctuation">(</span><span class="token keyword keyword-float">float</span> xoffset<span class="token punctuation">,</span> <span class="token keyword keyword-float">float</span> yoffset<span class="token punctuation">,</span> GLboolean constrainPitch <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-void">void</span> <span class="token function">ProcessMouseScroll</span><span class="token punctuation">(</span><span class="token keyword keyword-float">float</span> yoffset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-void">void</span> <span class="token function">ProcessKeyboardInput</span><span class="token punctuation">(</span>Camera_Movement direction<span class="token punctuation">,</span> <span class="token keyword keyword-float">float</span> deltaTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><p>具体实现见代码<code>src/Camera.cpp</code>和<code>src/Camera.h</code></p>
+<h3 id="mesh-类实现"><code>Mesh</code> 类实现 </h3>
+<p><code>Mesh</code> 类是几何网格的抽象，封装了模型的基本组成单元（顶点、索引和纹理），并负责 VAO/VBO/EBO 的 OpenGL 缓存管理与绘制流程。</p>
+<p><strong>主要原理：</strong></p>
+<ul>
+<li>
+<p><strong>顶点封装</strong>：<br>
+每个 <code>Vertex</code> 结构体包含位置、法线、纹理坐标、切线、副切线，以及最多 4 个骨骼索引和权重，支持基础的 PBR 材质系统和骨骼动画。</p>
+</li>
+<li>
+<p><strong>纹理绑定逻辑</strong>：<br>
+遍历纹理数组，将其绑定到连续的 <code>GL_TEXTURE</code> 单元，并根据类型（diffuse/specular/normal/height）传入对应的着色器 uniform。</p>
+</li>
+<li>
+<p><strong>顶点属性指针</strong>：<br>
+使用 <code>glVertexAttribPointer</code> 和 <code>glVertexAttribIPointer</code> 设置属性位置（位置、法线、纹理、切线、副切线、骨骼索引、权重）。</p>
+</li>
+<li>
+<p><strong>绘制调用</strong>：<br>
+统一使用 <code>glDrawElements(GL_TRIANGLES)</code> 实现渲染。</p>
+</li>
+</ul>
+<hr>
+<h3 id="model-类实现"><code>Model</code> 类实现 </h3>
+<p><code>Model</code> 类用于封装整个模型的加载与管理流程，本质上由多个 <code>Mesh</code> 组成。实现充分利用 Assimp 库进行模型导入、节点遍历和材质处理。</p>
+<p><strong>核心原理：</strong></p>
+<ul>
+<li>
+<p><strong>模型加载流程</strong>：<br>
+使用 <code>Assimp::Importer::ReadFile()</code> 读取模型文件（支持 obj/fbx 等格式），并开启三角化、法线生成、UV 翻转、切线计算等预处理选项。</p>
+</li>
+<li>
+<p><strong>递归解析节点树</strong>：<br>
+<code>processNode()</code> 递归遍历 Assimp 的层次结构，对每个子节点执行 mesh 解析。</p>
+</li>
+<li>
+<p><strong>网格解析</strong>：<br>
+<code>processMesh()</code> 提取顶点属性、面索引，并绑定材质信息。</p>
+</li>
+<li>
+<p><strong>纹理去重加载机制</strong>：<br>
+使用 <code>textures_loaded</code> 记录已加载纹理路径，避免重复加载。利用 <code>stb_image</code> 完成图像解码，并上传至 OpenGL 纹理对象。</p>
+</li>
+</ul>
+<h3 id="任务一实现">任务一实现 </h3>
+<p>在前三次实验中，我们已经做好了 Camera 类的对视角控制的实现，启动程序后我们可以自由的调整相机的位置和方向，以便更好地观察加载的模型。即使这里使用了 Assimp 库来加载模型，我们也可以通过相机的视角来观察模型。</p>
+<p>在<code>main.cpp</code>中，创建一个 <code>Camera</code> 对象，并在每一帧更新相机的视角。</p>
+<p>总的实现效果会在最后展示</p>
+<p><video controls="" src="录屏2025-05-18 19.34.05.mov" title="Title"></video></p>
+<h3 id="任务二实现">任务二实现 </h3>
+<p>为了实现材质的不同渲染效果，我们其实只需修改片段着色器代码即可。<br>
+根据 learnopengl 的教程，修改片段着色器代码，展示仅有漫反射材质、仅有镜面材质、二者均有的三种不同渲染效果。<br>
+为了灵活和扩展性，我们在着色器中额外添加一个<code>materialMode</code> 的 uniform 变量，来控制渲染的材质类型。</p>
+<p>片段着色器代码人如下：</p>
+<pre data-role="codeBlock" data-info="glsl" class="language-glsl glsl"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">version</span> <span class="token expression"><span class="token number">330</span> core</span></span>
+
+<span class="token keyword keyword-out">out</span> <span class="token keyword keyword-vec4">vec4</span> FragColor<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-in">in</span> <span class="token keyword keyword-vec3">vec3</span> FragPos<span class="token punctuation">;</span>
+<span class="token keyword keyword-in">in</span> <span class="token keyword keyword-vec3">vec3</span> Normal<span class="token punctuation">;</span>
+<span class="token keyword keyword-in">in</span> <span class="token keyword keyword-vec2">vec2</span> TexCoords<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-uniform">uniform</span> <span class="token keyword keyword-vec3">vec3</span> lightPos<span class="token punctuation">;</span>
+<span class="token keyword keyword-uniform">uniform</span> <span class="token keyword keyword-vec3">vec3</span> viewPos<span class="token punctuation">;</span>
+<span class="token keyword keyword-uniform">uniform</span> <span class="token keyword keyword-sampler2D">sampler2D</span> texture1<span class="token punctuation">;</span>
+
+<span class="token comment">// 新增：渲染模式控制变量（0=diffuse，1=specular，2=both）</span>
+<span class="token keyword keyword-uniform">uniform</span> <span class="token keyword keyword-int">int</span> materialMode<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-void">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 环境光</span>
+    <span class="token keyword keyword-float">float</span> ambientStrength <span class="token operator">=</span> <span class="token number">0.1</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-vec3">vec3</span> ambient <span class="token operator">=</span> ambientStrength <span class="token operator">*</span> <span class="token keyword keyword-vec3">vec3</span><span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 法线与方向</span>
+    <span class="token keyword keyword-vec3">vec3</span> norm <span class="token operator">=</span> <span class="token function">normalize</span><span class="token punctuation">(</span>Normal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-vec3">vec3</span> lightDir <span class="token operator">=</span> <span class="token function">normalize</span><span class="token punctuation">(</span>lightPos <span class="token operator">-</span> FragPos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-vec3">vec3</span> viewDir <span class="token operator">=</span> <span class="token function">normalize</span><span class="token punctuation">(</span>viewPos <span class="token operator">-</span> FragPos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-vec3">vec3</span> reflectDir <span class="token operator">=</span> <span class="token function">reflect</span><span class="token punctuation">(</span><span class="token operator">-</span>lightDir<span class="token punctuation">,</span> norm<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 漫反射</span>
+    <span class="token keyword keyword-float">float</span> diff <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token function">dot</span><span class="token punctuation">(</span>norm<span class="token punctuation">,</span> lightDir<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-vec3">vec3</span> diffuse <span class="token operator">=</span> diff <span class="token operator">*</span> <span class="token keyword keyword-vec3">vec3</span><span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 镜面反射</span>
+    <span class="token keyword keyword-float">float</span> specularStrength <span class="token operator">=</span> <span class="token number">0.5</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-float">float</span> spec <span class="token operator">=</span> <span class="token function">pow</span><span class="token punctuation">(</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token function">dot</span><span class="token punctuation">(</span>viewDir<span class="token punctuation">,</span> reflectDir<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-vec3">vec3</span> specular <span class="token operator">=</span> specularStrength <span class="token operator">*</span> spec <span class="token operator">*</span> <span class="token keyword keyword-vec3">vec3</span><span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 纹理采样</span>
+    <span class="token keyword keyword-vec3">vec3</span> texColor <span class="token operator">=</span> <span class="token function">texture</span><span class="token punctuation">(</span>texture1<span class="token punctuation">,</span> TexCoords<span class="token punctuation">)</span><span class="token punctuation">.</span>rgb<span class="token punctuation">;</span>
+
+    <span class="token comment">// 根据模式选择渲染方式</span>
+    <span class="token keyword keyword-vec3">vec3</span> result<span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>materialMode <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        result <span class="token operator">=</span> <span class="token punctuation">(</span>ambient <span class="token operator">+</span> diffuse<span class="token punctuation">)</span> <span class="token operator">*</span> texColor<span class="token punctuation">;</span>            <span class="token comment">// 仅漫反射</span>
+    <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>materialMode <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        result <span class="token operator">=</span> <span class="token punctuation">(</span>ambient <span class="token operator">+</span> specular<span class="token punctuation">)</span> <span class="token operator">*</span> texColor<span class="token punctuation">;</span>           <span class="token comment">// 仅镜面反射</span>
+    <span class="token keyword keyword-else">else</span>
+        result <span class="token operator">=</span> <span class="token punctuation">(</span>ambient <span class="token operator">+</span> diffuse <span class="token operator">+</span> specular<span class="token punctuation">)</span> <span class="token operator">*</span> texColor<span class="token punctuation">;</span> <span class="token comment">// 两者都有</span>
+
+    FragColor <span class="token operator">=</span> <span class="token keyword keyword-vec4">vec4</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>然后可以在<code>main.cpp</code>中设置不同的材质模式</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-int">int</span> currentMaterialMode <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token comment">// 默认漫反射+镜面反射</span>
+</code></pre><p>然后通过按键输入来控制显示效果:</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token function">glfwGetKey</span><span class="token punctuation">(</span>window<span class="token punctuation">,</span> GLFW_KEY_1<span class="token punctuation">)</span> <span class="token operator">==</span> GLFW_PRESS<span class="token punctuation">)</span>
+    currentMaterialMode <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token function">glfwGetKey</span><span class="token punctuation">(</span>window<span class="token punctuation">,</span> GLFW_KEY_2<span class="token punctuation">)</span> <span class="token operator">==</span> GLFW_PRESS<span class="token punctuation">)</span>
+    currentMaterialMode <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token function">glfwGetKey</span><span class="token punctuation">(</span>window<span class="token punctuation">,</span> GLFW_KEY_3<span class="token punctuation">)</span> <span class="token operator">==</span> GLFW_PRESS<span class="token punctuation">)</span>
+    currentMaterialMode <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+</code></pre><p>先给<code>Shader</code>添加一个<code>setVec3</code> 方法，支持灵活设置 uniform 变量</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-void">void</span> <span class="token function">setVec3</span><span class="token punctuation">(</span><span class="token keyword keyword-const">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> <span class="token keyword keyword-float">float</span> x<span class="token punctuation">,</span> <span class="token keyword keyword-float">float</span> y<span class="token punctuation">,</span> <span class="token keyword keyword-float">float</span> z<span class="token punctuation">)</span> <span class="token keyword keyword-const">const</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-void">void</span> <span class="token function">setVec3</span><span class="token punctuation">(</span><span class="token keyword keyword-const">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> <span class="token keyword keyword-const">const</span> glm<span class="token double-colon punctuation">::</span>vec3 <span class="token operator">&amp;</span>value<span class="token punctuation">)</span> <span class="token keyword keyword-const">const</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-void">void</span> <span class="token class-name">Shader</span><span class="token double-colon punctuation">::</span><span class="token function">setVec3</span><span class="token punctuation">(</span><span class="token keyword keyword-const">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> <span class="token keyword keyword-float">float</span> x<span class="token punctuation">,</span> <span class="token keyword keyword-float">float</span> y<span class="token punctuation">,</span> <span class="token keyword keyword-float">float</span> z<span class="token punctuation">)</span> <span class="token keyword keyword-const">const</span>
+<span class="token punctuation">{</span>
+    <span class="token function">glUniform3f</span><span class="token punctuation">(</span><span class="token function">glGetUniformLocation</span><span class="token punctuation">(</span>programID<span class="token punctuation">,</span> name<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-void">void</span> <span class="token class-name">Shader</span><span class="token double-colon punctuation">::</span><span class="token function">setVec3</span><span class="token punctuation">(</span><span class="token keyword keyword-const">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> <span class="token keyword keyword-const">const</span> glm<span class="token double-colon punctuation">::</span>vec3 <span class="token operator">&amp;</span>value<span class="token punctuation">)</span> <span class="token keyword keyword-const">const</span>
+<span class="token punctuation">{</span>
+    <span class="token function">glUniform3f</span><span class="token punctuation">(</span><span class="token function">glGetUniformLocation</span><span class="token punctuation">(</span>programID<span class="token punctuation">,</span> name<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> value<span class="token punctuation">.</span>x<span class="token punctuation">,</span> value<span class="token punctuation">.</span>y<span class="token punctuation">,</span> value<span class="token punctuation">.</span>z<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre><p>在每帧绘制前设置：</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code>shader<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+shader<span class="token punctuation">.</span><span class="token function">setInt</span><span class="token punctuation">(</span><span class="token string">"materialMode"</span><span class="token punctuation">,</span> currentMaterialMode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+shader<span class="token punctuation">.</span><span class="token function">setVec3</span><span class="token punctuation">(</span><span class="token string">"viewPos"</span><span class="token punctuation">,</span> camera<span class="token punctuation">.</span>Position<span class="token punctuation">)</span><span class="token punctuation">;</span>
+shader<span class="token punctuation">.</span><span class="token function">setVec3</span><span class="token punctuation">(</span><span class="token string">"lightPos"</span><span class="token punctuation">,</span> glm<span class="token double-colon punctuation">::</span><span class="token function">vec3</span><span class="token punctuation">(</span><span class="token number">10.0f</span><span class="token punctuation">,</span> <span class="token number">10.0f</span><span class="token punctuation">,</span> <span class="token number">10.0f</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><p>来看静态效果:</p>
+<ul>
+<li>漫反射 + 镜面反射<br>
+<img src="%E6%88%AA%E5%B1%8F2025-05-18%2019.47.28.png" alt="alt text"></li>
+<li>仅漫反射<br>
+<img src="%E6%88%AA%E5%B1%8F2025-05-18%2019.47.23.png" alt="alt text"></li>
+<li>仅镜面反射<br>
+<img src="%E6%88%AA%E5%B1%8F2025-05-18%2019.47.18.png" alt="alt text"></li>
+</ul>
+<p>可以发现：</p>
+<ul>
+<li>漫反射 + 镜面反射的效果整体明亮且具有高光、阴影层次明显。</li>
+<li>仅镜面反射的效果整体偏暗，仅有高光区域亮</li>
+<li>仅漫反射的效果色彩正常但无明显高光反射）</li>
+</ul>
+<h3 id="任务三实现">任务三实现 </h3>
+<p>为了支持多光源的渲染，我们需要增强着色器的能力，支持多个光源的渲染。<br>
+根据之前的经验，我们得升级我们的着色器，可以支持多个光源的渲染，同时为了动态的控制，我们要在程序中<code>Shader</code>类补充动态设置 uniform 变量的能力。</p>
+<p>参考 learnopengl,我们可以在片段着色器中添加一个<code>lightCount</code> 的 uniform 变量，来控制渲染的光源数量，并且在循环中根据光源数量动态计算光照效果。<br>
+并且添加一个<code>PointLight</code> 结构体来描述光源的属性。</p>
+<p>完善后的片段着色器代码如下：</p>
+<pre data-role="codeBlock" data-info="glsl" class="language-glsl glsl"><code><span class="token keyword keyword-struct">struct</span> <span class="token class-name">PointLight</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-vec3">vec3</span> position<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-vec3">vec3</span> ambient<span class="token punctuation">;</span>
+    <span class="token keyword keyword-vec3">vec3</span> diffuse<span class="token punctuation">;</span>
+    <span class="token keyword keyword-vec3">vec3</span> specular<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-float">float</span> constant<span class="token punctuation">;</span>
+    <span class="token keyword keyword-float">float</span> linear<span class="token punctuation">;</span>
+    <span class="token keyword keyword-float">float</span> quadratic<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">NR_POINT_LIGHTS</span> <span class="token expression"><span class="token number">4</span></span></span>
+
+<span class="token keyword keyword-uniform">uniform</span> PointLight pointLights<span class="token punctuation">[</span>NR_POINT_LIGHTS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-uniform">uniform</span> <span class="token keyword keyword-vec3">vec3</span> viewPos<span class="token punctuation">;</span>
+<span class="token keyword keyword-uniform">uniform</span> <span class="token keyword keyword-sampler2D">sampler2D</span> texture1<span class="token punctuation">;</span>
+<span class="token keyword keyword-uniform">uniform</span> <span class="token keyword keyword-int">int</span> materialMode<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-in">in</span> <span class="token keyword keyword-vec3">vec3</span> FragPos<span class="token punctuation">;</span>
+<span class="token keyword keyword-in">in</span> <span class="token keyword keyword-vec3">vec3</span> Normal<span class="token punctuation">;</span>
+<span class="token keyword keyword-in">in</span> <span class="token keyword keyword-vec2">vec2</span> TexCoords<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-out">out</span> <span class="token keyword keyword-vec4">vec4</span> FragColor<span class="token punctuation">;</span>
+
+<span class="token keyword keyword-void">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-vec3">vec3</span> norm <span class="token operator">=</span> <span class="token function">normalize</span><span class="token punctuation">(</span>Normal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-vec3">vec3</span> viewDir <span class="token operator">=</span> <span class="token function">normalize</span><span class="token punctuation">(</span>viewPos <span class="token operator">-</span> FragPos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-vec3">vec3</span> result <span class="token operator">=</span> <span class="token keyword keyword-vec3">vec3</span><span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> NR_POINT_LIGHTS<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-vec3">vec3</span> lightDir <span class="token operator">=</span> <span class="token function">normalize</span><span class="token punctuation">(</span>pointLights<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>position <span class="token operator">-</span> FragPos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-float">float</span> distance <span class="token operator">=</span> <span class="token function">length</span><span class="token punctuation">(</span>pointLights<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>position <span class="token operator">-</span> FragPos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-float">float</span> attenuation <span class="token operator">=</span> <span class="token number">1.0</span> <span class="token operator">/</span> <span class="token punctuation">(</span>pointLights<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>constant <span class="token operator">+</span> pointLights<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>linear <span class="token operator">*</span> distance <span class="token operator">+</span> pointLights<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>quadratic <span class="token operator">*</span> <span class="token punctuation">(</span>distance <span class="token operator">*</span> distance<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 环境光</span>
+        <span class="token keyword keyword-vec3">vec3</span> ambient <span class="token operator">=</span> pointLights<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>ambient<span class="token punctuation">;</span>
+
+        <span class="token comment">// 漫反射</span>
+        <span class="token keyword keyword-float">float</span> diff <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token function">dot</span><span class="token punctuation">(</span>norm<span class="token punctuation">,</span> lightDir<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-vec3">vec3</span> diffuse <span class="token operator">=</span> pointLights<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>diffuse <span class="token operator">*</span> diff<span class="token punctuation">;</span>
+
+        <span class="token comment">// 镜面反射</span>
+        <span class="token keyword keyword-vec3">vec3</span> reflectDir <span class="token operator">=</span> <span class="token function">reflect</span><span class="token punctuation">(</span><span class="token operator">-</span>lightDir<span class="token punctuation">,</span> norm<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-float">float</span> spec <span class="token operator">=</span> <span class="token function">pow</span><span class="token punctuation">(</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token function">dot</span><span class="token punctuation">(</span>viewDir<span class="token punctuation">,</span> reflectDir<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">32.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-vec3">vec3</span> specular <span class="token operator">=</span> pointLights<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>specular <span class="token operator">*</span> spec<span class="token punctuation">;</span>
+
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>materialMode <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> result <span class="token operator">+=</span> ambient <span class="token operator">+</span> diffuse<span class="token punctuation">;</span>
+        <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>materialMode <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> result <span class="token operator">+=</span> ambient <span class="token operator">+</span> specular<span class="token punctuation">;</span>
+        <span class="token keyword keyword-else">else</span> result <span class="token operator">+=</span> ambient <span class="token operator">+</span> diffuse <span class="token operator">+</span> specular<span class="token punctuation">;</span>
+
+        result <span class="token operator">*=</span> attenuation<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    FragColor <span class="token operator">=</span> <span class="token keyword keyword-vec4">vec4</span><span class="token punctuation">(</span>result <span class="token operator">*</span> <span class="token function">texture</span><span class="token punctuation">(</span>texture1<span class="token punctuation">,</span> TexCoords<span class="token punctuation">)</span><span class="token punctuation">.</span>rgb<span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>然后在<code>main.cpp</code>中的渲染中增加点光源，并尝试让光源移动</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token comment">//用四个vector3表示四个点光源的位置</span>
+glm<span class="token double-colon punctuation">::</span>vec3 pointLightPositions<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+    glm<span class="token double-colon punctuation">::</span><span class="token function">vec3</span><span class="token punctuation">(</span><span class="token number">5.0f</span><span class="token punctuation">,</span> <span class="token number">5.0f</span><span class="token punctuation">,</span> <span class="token number">5.0f</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    glm<span class="token double-colon punctuation">::</span><span class="token function">vec3</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">5.0f</span><span class="token punctuation">,</span> <span class="token number">5.0f</span><span class="token punctuation">,</span> <span class="token number">5.0f</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    glm<span class="token double-colon punctuation">::</span><span class="token function">vec3</span><span class="token punctuation">(</span><span class="token number">5.0f</span><span class="token punctuation">,</span> <span class="token number">5.0f</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">5.0f</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    glm<span class="token double-colon punctuation">::</span><span class="token function">vec3</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">5.0f</span><span class="token punctuation">,</span> <span class="token number">5.0f</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">5.0f</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre><p>再给<code>Shader</code> 添加一个 <code>setInt</code> 和<code>setFloat</code>方法，支持灵活设置 uniform 变量</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-void">void</span> <span class="token function">setInt</span><span class="token punctuation">(</span><span class="token keyword keyword-const">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> value<span class="token punctuation">)</span> <span class="token keyword keyword-const">const</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-void">void</span> <span class="token function">setFloat</span><span class="token punctuation">(</span><span class="token keyword keyword-const">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> <span class="token keyword keyword-float">float</span> value<span class="token punctuation">)</span> <span class="token keyword keyword-const">const</span><span class="token punctuation">;</span>
+</code></pre><pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-void">void</span> <span class="token class-name">Shader</span><span class="token double-colon punctuation">::</span><span class="token function">setInt</span><span class="token punctuation">(</span><span class="token keyword keyword-const">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> value<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">glUniform1i</span><span class="token punctuation">(</span><span class="token function">glGetUniformLocation</span><span class="token punctuation">(</span>programID<span class="token punctuation">,</span> name<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword keyword-void">void</span> <span class="token class-name">Shader</span><span class="token double-colon punctuation">::</span><span class="token function">setFloat</span><span class="token punctuation">(</span><span class="token keyword keyword-const">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>name<span class="token punctuation">,</span> <span class="token keyword keyword-float">float</span> value<span class="token punctuation">)</span> <span class="token keyword keyword-const">const</span>
+<span class="token punctuation">{</span>
+    <span class="token function">glUniform1f</span><span class="token punctuation">(</span><span class="token function">glGetUniformLocation</span><span class="token punctuation">(</span>programID<span class="token punctuation">,</span> name<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>然后传递光源参数到 Shader</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code>shader<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+shader<span class="token punctuation">.</span><span class="token function">setInt</span><span class="token punctuation">(</span><span class="token string">"materialMode"</span><span class="token punctuation">,</span> currentMaterialMode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+shader<span class="token punctuation">.</span><span class="token function">setVec3</span><span class="token punctuation">(</span><span class="token string">"viewPos"</span><span class="token punctuation">,</span> camera<span class="token punctuation">.</span>Position<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token double-colon punctuation">::</span>string number <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">to_string</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    shader<span class="token punctuation">.</span><span class="token function">setVec3</span><span class="token punctuation">(</span><span class="token string">"pointLights["</span> <span class="token operator">+</span> number <span class="token operator">+</span> <span class="token string">"].position"</span><span class="token punctuation">,</span> pointLightPositions<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    shader<span class="token punctuation">.</span><span class="token function">setVec3</span><span class="token punctuation">(</span><span class="token string">"pointLights["</span> <span class="token operator">+</span> number <span class="token operator">+</span> <span class="token string">"].ambient"</span><span class="token punctuation">,</span> glm<span class="token double-colon punctuation">::</span><span class="token function">vec3</span><span class="token punctuation">(</span><span class="token number">0.1f</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    shader<span class="token punctuation">.</span><span class="token function">setVec3</span><span class="token punctuation">(</span><span class="token string">"pointLights["</span> <span class="token operator">+</span> number <span class="token operator">+</span> <span class="token string">"].diffuse"</span><span class="token punctuation">,</span> glm<span class="token double-colon punctuation">::</span><span class="token function">vec3</span><span class="token punctuation">(</span><span class="token number">0.8f</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    shader<span class="token punctuation">.</span><span class="token function">setVec3</span><span class="token punctuation">(</span><span class="token string">"pointLights["</span> <span class="token operator">+</span> number <span class="token operator">+</span> <span class="token string">"].specular"</span><span class="token punctuation">,</span> glm<span class="token double-colon punctuation">::</span><span class="token function">vec3</span><span class="token punctuation">(</span><span class="token number">1.0f</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    shader<span class="token punctuation">.</span><span class="token function">setFloat</span><span class="token punctuation">(</span><span class="token string">"pointLights["</span> <span class="token operator">+</span> number <span class="token operator">+</span> <span class="token string">"].constant"</span><span class="token punctuation">,</span> <span class="token number">1.0f</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    shader<span class="token punctuation">.</span><span class="token function">setFloat</span><span class="token punctuation">(</span><span class="token string">"pointLights["</span> <span class="token operator">+</span> number <span class="token operator">+</span> <span class="token string">"].linear"</span><span class="token punctuation">,</span> <span class="token number">0.09f</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    shader<span class="token punctuation">.</span><span class="token function">setFloat</span><span class="token punctuation">(</span><span class="token string">"pointLights["</span> <span class="token operator">+</span> number <span class="token operator">+</span> <span class="token string">"].quadratic"</span><span class="token punctuation">,</span> <span class="token number">0.032f</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>为了让发光源更明显，我们可以再添加一个光源立方体系统，独立写新的着色器</p>
+<p>顶点着色器</p>
+<pre data-role="codeBlock" data-info="glsl" class="language-glsl glsl"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">version</span> <span class="token expression"><span class="token number">330</span> core</span></span>
+<span class="token keyword keyword-layout">layout</span><span class="token punctuation">(</span>location<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword keyword-in">in</span> <span class="token keyword keyword-vec3">vec3</span> aPos<span class="token punctuation">;</span>
+<span class="token keyword keyword-uniform">uniform</span> <span class="token keyword keyword-mat4">mat4</span> model<span class="token punctuation">,</span> view<span class="token punctuation">,</span> projection<span class="token punctuation">;</span>
+<span class="token keyword keyword-void">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> gl_Position <span class="token operator">=</span> projection<span class="token operator">*</span>view<span class="token operator">*</span>model<span class="token operator">*</span><span class="token keyword keyword-vec4">vec4</span><span class="token punctuation">(</span>aPos<span class="token punctuation">,</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre><p>片段着色器</p>
+<pre data-role="codeBlock" data-info="glsl" class="language-glsl glsl"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">version</span> <span class="token expression"><span class="token number">330</span> core</span></span>
+<span class="token keyword keyword-out">out</span> <span class="token keyword keyword-vec4">vec4</span> FragColor<span class="token punctuation">;</span>
+<span class="token keyword keyword-uniform">uniform</span> <span class="token keyword keyword-vec3">vec3</span> lightColor<span class="token punctuation">;</span>
+<span class="token keyword keyword-void">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> FragColor <span class="token operator">=</span> <span class="token keyword keyword-vec4">vec4</span><span class="token punctuation">(</span>lightColor<span class="token punctuation">,</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre><p>在<code>main.cpp</code>中添加光源立方体的 VAO/VBO/EBO 的 OpenGL 缓存管理与绘制流程</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code><span class="token keyword keyword-unsigned">unsigned</span> <span class="token keyword keyword-int">int</span> VBO<span class="token punctuation">,</span> cubeVAO<span class="token punctuation">,</span> lightCubeVAO<span class="token punctuation">;</span>
+<span class="token function">createUnitCube</span><span class="token punctuation">(</span>VBO<span class="token punctuation">,</span> cubeVAO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">glGenVertexArrays</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>lightCubeVAO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">glBindVertexArray</span><span class="token punctuation">(</span>lightCubeVAO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">glBindBuffer</span><span class="token punctuation">(</span>GL_ARRAY_BUFFER<span class="token punctuation">,</span> VBO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">glVertexAttribPointer</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span>GL_FLOAT<span class="token punctuation">,</span>GL_FALSE<span class="token punctuation">,</span><span class="token number">8</span><span class="token operator">*</span><span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span><span class="token keyword keyword-float">float</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token keyword keyword-void">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">glEnableVertexAttribArray</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</code></pre><p>加载着色器：</p>
+<pre data-role="codeBlock" data-info="cpp" class="language-cpp cpp"><code>Shader <span class="token function">shader</span><span class="token punctuation">(</span><span class="token string">"shaders/model_vertex_shader.vs"</span><span class="token punctuation">,</span>
+              <span class="token string">"shaders/model_fragment_shader.fs"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Shader <span class="token function">lightCubeShader</span><span class="token punctuation">(</span><span class="token string">"shaders/light_cube.vs"</span><span class="token punctuation">,</span>
+                       <span class="token string">"shaders/light_cube.fs"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><p>顶点数据就用<code>light_casters_point.cpp</code>中的数据，详情见代码<code>src/main.cpp</code></p>
+<h2 id="最终效果">最终效果 </h2>
+<p>实现了模型加载，视角移动，多光源，立方体光源可以在场景中自由移动，产生动态的光照效果后，最终的效果如下：<br>
+<video controls="" src="录屏2025-05-18 20.18.42.mov" title="Title"></video></p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>

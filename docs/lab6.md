@@ -168,27 +168,32 @@ std::vector<float> grassPoints = {
 };
 ```
 
-为了适应形状，修改着色器
+下面是一份对三个着色器功能解释的表格（ai 生成）
+| 着色器 | 主要职责 | 关键输入 / 输出 | 典型运算 | 对场景的影响 |
+| ------------------------ | --------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+| **grass.vs** <br>(顶点着色器) | 把 **散点** 形式的草位置从模型空间变换到世界空间；把每株草的颜色传递下去 | **in** `aPos` (世界中某一点的坐标) <br>**in** `aColor` (每株草的基色) <br>**uniform** `model` | `worldPos = model * vec4(aPos,1)` <br>向下一阶段输出 `worldPos` 与 `color` | 顶点数不变（仍然是 N 个点），为后续几何着色器提供中心点 |
+| **grass.gs** <br>(几何着色器) | 把 _一个输入点_ **扩展** 成 _一张面向摄像机_ 的“四边形草片” | **in** (来自 VS) `worldPos`、`color` <br>**uniform** `view`、`projection` | 1. 计算 **right** = camera 右向量 × size <br>2. 组合 `center ± right` 与 `up` 生成 4 个顶点 <br>3. 依次写入 **TexCoord** = (0/1,0/1) 形成条带 | 每个输入点输出 4 个顶点（`triangle_strip`），因此真正绘制的是始终朝向摄像机的 _billboard_，实现 **交叉草片** 效果 |
+| **grass.fs** <br>(片元着色器) | 从带透明度的草纹理中取样；根据 alfa 丢弃 | **in** `TexCoord`、`color` <br>**uniform** `texture1` | `tex = texture(texture1, TexCoord)` <br>`if(tex.a < 0.1) discard;` <br>`FragColor = tex * vec4(color,1)` | 仅渲染纹理不透明部分，保留纹理本身的绿叶细节，并叠乘顶点颜色做简单调色 |
 
 grass.vs
 
 ```glsl
 #version 330 core
-layout(location = 0) in vec3 aPos;
-layout(location = 1) in vec3 aColor;
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec3 aColor;
 
 out VS_OUT {
-    vec3 color;
-    vec4 worldPos;
+    vec3  color;
+    vec4  worldPos;
 } vs_out;
 
 uniform mat4 model;
 
 void main()
 {
-    vs_out.color = aColor;
-    vs_out.worldPos = model * vec4(aPos, 1.0);
-    gl_Position = vs_out.worldPos;
+    vs_out.color     = aColor;
+    vs_out.worldPos  = model * vec4(aPos, 1.0);
+    gl_Position      = vs_out.worldPos;
 }
 ```
 
@@ -196,49 +201,92 @@ grass.gs
 
 ```glsl
 #version 330 core
-layout(points) in;
-layout(triangle_strip, max_vertices = 4) out;
+layout (points)                          in;
+layout (triangle_strip, max_vertices=4) out;
 
 in VS_OUT {
     vec3 color;
     vec4 worldPos;
 } gs_in[];
 
-out vec3 fColor;
+out GS_OUT {
+    vec3 color;
+    vec2 TexCoord;
+} gs_out;
 
 uniform mat4 view;
 uniform mat4 projection;
 
 void main()
 {
-    vec4 p = gs_in[0].worldPos;
-    float size = 0.3;
-    fColor = gs_in[0].color;
+    vec3 center = vec3(gs_in[0].worldPos);
+    float size  = 0.35;
 
-    vec3 right = vec3(view[0][0], view[1][0], view[2][0]) * size;
+    vec3 right = normalize(vec3(view[0][0], view[1][0], view[2][0])) * size;
     vec3 up    = vec3(0.0, size, 0.0);
 
-    gl_Position = projection * view * vec4(p.xyz - right, 1.0); EmitVertex();
-    gl_Position = projection * view * vec4(p.xyz + right, 1.0); EmitVertex();
-    gl_Position = projection * view * vec4(p.xyz - right + up, 1.0); EmitVertex();
-    gl_Position = projection * view * vec4(p.xyz + right + up, 1.0); EmitVertex();
+    gs_out.color = gs_in[0].color;
+    gs_out.TexCoord = vec2(0.0, 1.0);
+    gl_Position     = projection * view * vec4(center - right, 1.0);
+    EmitVertex();
+
+    gs_out.TexCoord = vec2(1.0, 1.0);
+    gl_Position     = projection * view * vec4(center + right, 1.0);
+    EmitVertex();
+
+    gs_out.TexCoord = vec2(0.0, 0.0);
+    gl_Position     = projection * view * vec4(center - right + up, 1.0);
+    EmitVertex();
+
+    gs_out.TexCoord = vec2(1.0, 0.0);
+    gl_Position     = projection * view * vec4(center + right + up, 1.0);
+    EmitVertex();
+
     EndPrimitive();
 }
-
 ```
 
 grass.fs
 
 ```glsl
 #version 330 core
-in vec3 fColor;
+in GS_OUT {
+    vec3 color;
+    vec2 TexCoord;
+} fs_in;
+
+uniform sampler2D texture1;
+
 out vec4 FragColor;
 
 void main()
 {
-    FragColor = vec4(fColor, 1.0);
+    vec4 tex = texture(texture1, fs_in.TexCoord);
+    if (tex.a < 0.1) discard;
+    FragColor = tex * vec4(fs_in.color, 1.0);
 }
+```
 
+加载草的纹理资源需要有透明通道，我们还需要改进`loadTexture`函数，增加一个参数来设置纹理的透明度。
+
+```cpp
+unsigned int loadTexture(const char *path, bool alpha = false)
+{
+    unsigned int tex;
+    glGenTextures(1, &tex);
+    int w, h, n;
+    unsigned char *data = stbi_load(path, &w, &h, &n, 0);
+    GLenum fmt = alpha ? GL_RGBA : (n == 3 ? GL_RGB : GL_RED);
+    glBindTexture(GL_TEXTURE_2D, tex);
+    glTexImage2D(GL_TEXTURE_2D, 0, fmt, w, h, 0, fmt, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    stbi_image_free(data);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    return tex;
+}
 ```
 
 加载新的着色器并设置 VAO/VBO
@@ -265,3 +313,44 @@ grassShader.setMat4("view", view);
 glBindVertexArray(grassVAO);
 glDrawArrays(GL_POINTS, 0, grassPositions.size());
 ```
+
+现在就可以正常显示天空，地面，背包，小草了，位了形成多种不同的效果，我们可以修改草的位置
+
+```cpp
+std::vector<float> grassPoints = {
+    -1.0f, -0.5f, -1.0f, 0.3f, 0.9f, 0.3f,
+    1.0f, -0.5f, 0.5f, 0.2f, 0.8f, 0.2f,
+    0.0f, -0.5f, 1.5f, 0.4f, 0.9f, 0.4f,
+    -1.5f, -0.5f, 2.0f, 0.3f, 0.7f, 0.3f,
+    1.5f, -0.5f, -2.5f, 0.2f, 0.6f, 0.2f,
+    0.5f, -0.5f, -1.8f, 0.3f, 0.9f, 0.3f};
+```
+
+```cpp
+std::vector<float> grassPoints = {
+    -2.2f, -0.5f,  1.8f,  0.3f, 0.8f, 0.3f,
+     0.0f, -0.5f, -1.2f,  0.4f, 0.9f, 0.4f,
+     1.5f, -0.5f,  0.5f,  0.2f, 0.7f, 0.2f,
+    -1.0f, -0.5f, -2.5f,  0.35f, 0.9f, 0.35f,
+     2.0f, -0.5f, -1.8f,  0.25f, 0.8f, 0.25f,
+    -0.5f, -0.5f,  2.3f,  0.3f, 0.85f, 0.3f
+};
+```
+
+```cpp
+std::vector<float> grassPoints = {
+    -1.8f, -0.5f,  1.2f,  0.3f, 0.85f, 0.3f,
+     1.2f, -0.5f, -1.4f,  0.2f, 0.75f, 0.2f,
+     0.0f, -0.5f,  0.0f,  0.4f, 0.9f,  0.4f,
+    -2.0f, -0.5f, -1.6f,  0.25f, 0.8f, 0.25f,
+     2.3f, -0.5f,  0.9f,  0.3f, 0.9f,  0.3f,
+     0.8f, -0.5f,  2.1f,  0.35f, 0.85f, 0.35f
+};
+```
+
+### 实现效果
+
+各种显示效果如下：
+![alt text](<截屏2025-05-18 22.13.23.png>)
+![alt text](<截屏2025-05-18 22.16.17.png>)
+![alt text](<截屏2025-05-18 22.16.59.png>)
